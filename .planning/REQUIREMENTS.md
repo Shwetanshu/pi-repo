@@ -53,21 +53,26 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ITEM-01 | — | Pending |
-| ITEM-02 | — | Pending |
-| ITEM-03 | — | Pending |
-| IDNT-01 | — | Pending |
-| IDNT-02 | — | Pending |
-| STOR-01 | — | Pending |
-| STOR-02 | — | Pending |
-| STOR-03 | — | Pending |
-| RUN-01 | — | Pending |
+| ITEM-01 | Phase 1 | Pending |
+| ITEM-02 | Phase 2 | Pending |
+| ITEM-03 | Phase 3 | Pending |
+| IDNT-01 | Phase 1 | Pending |
+| IDNT-02 | Phase 3 | Pending |
+| STOR-01 | Phase 1 | Pending |
+| STOR-02 | Phase 1 | Pending |
+| STOR-03 | Phase 2 | Pending |
+| RUN-01 | Phase 1 | Pending |
 
 **Coverage:**
 - v1 requirements: 9 total
-- Mapped to phases: 0
-- Unmapped: 9 ⚠️
+- Mapped to phases: 9
+- Unmapped: 0 ✓
+
+**Per-phase counts:**
+- Phase 1 (Capture to Disk): 5 — ITEM-01, IDNT-01, STOR-01, STOR-02, RUN-01
+- Phase 2 (Read It Back): 2 — ITEM-02, STOR-03
+- Phase 3 (Close It Out): 2 — ITEM-03, IDNT-02
 
 ---
 *Requirements defined: 2026-10-29*
-*Last updated: 2026-10-29 after initial definition*
+*Last updated: 2026-10-29 after roadmap creation*
