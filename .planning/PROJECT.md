@@ -1,12 +1,15 @@
-# Todo CLI
+# todo-cli
 
 ## What This Is
 
-A zero-dependency Node.js command-line tool for managing a simple to-do list. Users run `todo add "buy milk"`, `todo list`, and `todo done 1` from a terminal; items persist to a local `todos.json` file. Built with Node built-ins only — no external packages, no build step, no database.
+A small Node.js command-line tool for managing a personal to-do list. Three commands —
+`todo add`, `todo list`, and `todo done` — read and write a `todos.json` file in the current
+directory. Built with Node built-ins only, no external dependencies.
 
 ## Core Value
 
-`todo add` followed by `todo list` must work flawlessly on a clean Node install, with data surviving between invocations. If nothing else works, adding and seeing a task must.
+Adding, listing, and completing to-dos from the terminal must be instant and require zero setup:
+one JSON file, one command.
 
 ## Requirements
 
@@ -16,51 +19,50 @@ A zero-dependency Node.js command-line tool for managing a simple to-do list. Us
 
 ### Active
 
-- [ ] `todo add "<text>"` appends a new incomplete item and prints its assigned ID
-- [ ] `todo list` prints all items as plain aligned text, e.g. `1. [ ] buy milk`
-- [ ] `todo done <id>` marks the given item complete and confirms it
-- [ ] Items persist to `./todos.json` in the current working directory
-- [ ] Each item stores only `{ id, text, done }`
-- [ ] IDs are sequential integers, never reused after deletion
-- [ ] Errors (unknown ID, empty text, corrupt JSON) print a clear stderr message and exit non-zero
-- [ ] Installable via `npm link` using a `bin` entry named `todo`
+- [ ] User can add a to-do item with `todo add "<text>"`
+- [ ] User can list all items with `todo list`, with completed items visibly marked
+- [ ] User can mark an item complete by ID with `todo done <id>`
+- [ ] Item IDs are stable and never reused
+- [ ] Data persists to `todos.json` in the current working directory
+- [ ] `todos.json` is created automatically if absent on any command
+- [ ] CLI uses only Node built-ins (no external dependencies)
+- [ ] `todo done <unknown-id>` is a silent no-op
 
 ### Out of Scope
 
-- `remove` and `clear` commands — v1 ships exactly add/list/done; deletion is a future phase
-- Tests — user opted for manual verification only in v1
-- Colored/TTY-aware output — plain text chosen for pipe-friendliness
-- Timestamps, priority, tags, categories — item model stays minimal
-- Remote sync, database, or multi-user support — local file only
-- External dependencies — Node built-ins only is a hard constraint
+- `remove`, `clear`, `edit`, `reopen` commands — v1 surface is deliberately three commands
+- Multiple named lists or projects — one `todos.json` per directory
+- Sync, accounts, cloud storage — local file only
+- Automated tests — user opted out for v1; verification is manual
+- npm publishing / `bin` field — run from the repo, no publish step
 
 ## Context
 
-- Greenfield project; the repository currently contains only GSD tooling (`.claude/`, `.opencode/`), no application code.
-- The tool is aimed at developers who want a tiny, predictable task list without installing a package manager ecosystem or running a daemon.
-- Plain-text output is intentional so the command composes with `grep`, `awk`, and shell scripts.
-- "No external dependencies" is both a simplicity goal and a trust/supply-chain goal.
+Users run the CLI from the repository. Storage is per-directory, so each folder holds its own
+list; running the same command from a different directory operates on a different `todos.json`.
 
 ## Constraints
 
-- **Tech stack**: Node.js built-ins only (`node:fs`, `node:process`, `node:path`) — no npm dependencies, no bundler, no transpiler
-- **Storage**: A single `todos.json` in the current working directory — human-readable and diffable
-- **Distribution**: `package.json` with `"bin": { "todo": ... }`; usable via `npm link`
-- **Interface**: Exactly three subcommands (`add`, `list`, `done`) for v1
-- **Error behavior**: Fail loudly — non-zero exit and stderr message; no silent recovery or auto-repair of corrupt data
+- **Tech stack**: Node.js built-ins only (`node:fs`, `node:path`, `process.argv`) — no
+  package dependencies.
+- **Storage**: plain JSON at `./todos.json`.
+- **Distribution**: run from repo; no publish step and no global install.
+- **Data safety**: invalid JSON is reset silently. Accepted risk — a corrupt file loses
+  existing items.
 
 ## Key Decisions
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Store `todos.json` in the current directory | Per-project task lists; predictable and easy to inspect | — Pending |
-| Minimal item model `{ id, text, done }` | Keeps the file small and the code trivial | — Pending |
-| Sequential IDs, never reused | Stable references across invocations; `done 1` always means the same task | — Pending |
-| Plain-text `list` output | Pipe-friendly; no TTY detection complexity | — Pending |
-| Ship only add/list/done in v1 | Smallest useful tool; avoids scope creep | — Pending |
-| No automated tests in v1 | User chose manual verification for this small tool | — Pending |
-| Fail loudly on errors | Scripts can rely on exit codes; corrupt data is surfaced, not hidden | — Pending |
-| `npm bin` distribution | Gives a real `todo` command after `npm link` | — Pending |
+| Store `todos.json` in the current directory | Per-project lists, simple mental model | — Pending |
+| Stable IDs, never reused | `todo done <id>` stays predictable as the list changes | — Pending |
+| `done` marks completed and keeps the item | History stays visible in `todo list` | — Pending |
+| `list` shows all items with completed marked | Single view, no extra flags needed | — Pending |
+| Only `add` / `list` / `done` in v1 | Smallest useful surface | — Pending |
+| Unknown ID on `done` is a silent no-op | User preference | — Pending |
+| Always create `todos.json` if missing | Zero-setup first run | — Pending |
+| Silent reset on corrupt JSON | User preference; accepted data-loss risk | — Pending |
+| No automated tests | User preference for v1 | — Pending |
 
 ## Evolution
 
