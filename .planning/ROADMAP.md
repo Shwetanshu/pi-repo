@@ -32,8 +32,10 @@ something the user can run in a terminal and judge for themselves.
 **Plans**: 2 plans
 
 Plans:
-- [ ] 01-01: CLI entry point and argument dispatch for `add` (including missing-text handling)
-- [ ] 01-02: JSON store — read, append, auto-create `todos.json`, assign next stable ID
+- [ ] 01-01-PLAN.md — on-disk shape gate (one-way door), then the `add` tracer end-to-end plus the full argument-dispatch contract
+- [ ] 01-02-PLAN.md — lossless store: append without clobber, atomic temp+rename write, `max+1` IDs, empty-file semantics
+
+**Walking Skeleton:** `SKELETON.md` in the phase directory (architectural contract for Phases 2 and 3)
 
 **UI hint**: no
 
